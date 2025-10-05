@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>❄️冬の北海道人気露天風呂診断❄️</title>
+    <meta name="description" content="質問に答えて、あなたにぴったりの北海道の冬の露天風呂を見つけよう！SNSでシェアして友達にも診断してもらおう。">
+    <meta property="og:title" content="❄️冬の北海道人気露天風呂診断❄️">
+    <meta property="og:description" content="質問に答えて、あなたにぴったりの北海道の冬の露天風呂を見つけよう！">
+    <meta property="og:type" content="website">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', 'Meiryo', 'メイリオ', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .start-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        .quiz-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 5px;
+        }
+        
+        .question {
+            font-size: 1.4em;
+            margin-bottom: 25px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .options {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1em;
+        }
+        
+        .option:hover {
+            background: #e3f2fd;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .option.selected {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .next-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 25px;
+            opacity: 0.5;
+            transition: all 0.3s;
+            float: right;
+        }
+        
+        .next-btn.enabled {
+            opacity: 1;
+        }
+        
+        .next-btn.enabled:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .result-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .result-title {
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .result-image {
+            width: 100%;
+            max-width: 600px;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .result-description {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .share-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.3s;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .share-btn.twitter {
+            background: #1da1f2;
+        }
+        
+        .share-btn.instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .restart-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .restart-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .github-link {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+        
+        .github-link:hover {
+            background: rgba(0,0,0,0.9);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .share-btn {
+                width: 200px;
+            }
+            
+            .github-link {
+                position: static;
+                display: block;
+                margin: 20px auto;
+                width: fit-content;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="https://github.com/your-username/hokkaido-onsen-quiz" class="github-link" target="_blank">⭐ GitHub</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1>❄️冬の北海道人気露天風呂診断❄️</h1>
+            <p class="subtitle">質問に答えて、あなたにぴったりの雪見露天風呂を見つけよう！</p>
+            <button class="start-btn" onclick="startQuiz()">診断スタート！</button>
+        </div>
+        
+        <div class="quiz-container" id="quizContainer">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="question" id="questionText"></div>
+            <div class="options" id="optionsContainer"></div>
+            <button class="next-btn" id="nextBtn" onclick="nextQuestion()">次へ</button>
+            <div style="clear: both;"></div>
+        </div>
+        
+        <div class="result-container" id="resultContainer">
+            <div class="result-title" id="resultTitle"></div>
+            <img class="result-image" id="resultImage" alt="診断結果の露天風呂">
+            <div class="result-description" id="resultDescription"></div>
+            <div class="share-buttons">
+                <a href="#" class="share-btn twitter" id="twitterShare">Xでシェア</a>
+                <a href="#" class="share-btn instagram" id="instagramShare">Instagramでシェア</a>
+            </div>
+            <button class="restart-btn" onclick="restartQuiz()">もう一度診断する</button>
+        </div>
+    </div>
+
+    <script>
+        // 診断データ（実際の画像URL付き）
+        const destinations = {
+            "然別湖コタン": {
+                name: "然別湖コタン（氷上露天風呂）",
+                image: "https://cdn1.genspark.ai/user-upload-image/4_generated/4e52baed-3f32-44ed-b406-ad5a96269318",
+                description: "🏔️ **世界唯一の氷上露天風呂で極上の体験を！**<br><br>凍った然別湖の上に現れる幻の村「しかりべつ湖コタン」。厳冬期だけの特別な体験として、氷で作られた露天風呂で温泉を楽しめます。外気温マイナス20度の中、60度の温泉に浸かりながら見上げる満天の星空は、まさに一生の思い出になる絶景です。<br><br>✨ **特徴**<br>• 世界唯一の氷上露天風呂<br>• 期間限定（1月下旬〜3月中旬）<br>• アイスバーやアイスロッジも併設<br>• SNS映え間違いなしの幻想的な体験<br><br>📍 **アクセス**: 河東郡鹿追町然別湖<br>💰 **入場料**: 500円（小学生以上）",
+                hashtags: "#然別湖コタン #氷上露天風呂 #北海道温泉 #雪見風呂 #幻の村"
+            },
+            "十勝岳温泉": {
+                name: "十勝岳温泉（上富良野町）",
+                image: "https://cdn1.genspark.ai/user-upload-image/4_generated/c17b2785-a26e-49e0-bcb8-4fe1f07016f5",
+                description: "🗻 **標高1,280mの天空露天風呂で絶景パノラマ！**<br><br>北海道最高地点の温泉地として知られる十勝岳温泉。雄大な十勝岳連峰を間近に望みながら入る露天風呂は、まさに天空の湯浴み体験。冬は一面の雪景色と澄んだ空気の中で、贅沢なひとときを過ごせます。<br><br>✨ **特徴**<br>• 北海道最高地点の温泉（標高1,280m）<br>• 360度の大パノラマビュー<br>• 硫黄泉で美肌効果も期待<br>• 早朝の朝日が特に美しい<br><br>📍 **アクセス**: 上富良野町十勝岳温泉<br>💰 **日帰り入浴**: 600円〜800円",
+                hashtags: "#十勝岳温泉 #天空露天風呂 #上富良野 #雪山温泉 #絶景温泉"
+            },
+            "コタンの湯": {
+                name: "コタンの湯（屈斜路湖畔）",
+                image: "https://cdn1.genspark.ai/user-upload-image/4_generated/57ef538c-0919-4f95-bf2f-ac7a333421e6",
+                description: "🦢 **白鳥と一緒に入る秘湯中の秘湯！**<br><br>屈斜路湖のほとりに佇む無料の露天風呂。冬になると湖に白鳥が飛来し、温泉に浸かりながら優雅に泳ぐ白鳥を間近で観察できる貴重な体験ができます。24時間いつでも利用可能で、地元の方々の善意で清潔に保たれている心温まる秘湯です。<br><br>✨ **特徴**<br>• 白鳥観察しながら入浴可能<br>• 完全無料の露天風呂<br>• 24時間利用可能<br>• 湖まで距離わずか5m<br><br>📍 **アクセス**: 川上郡弟子屈町屈斜路コタン<br>💰 **入浴料**: 無料",
+                hashtags: "#コタンの湯 #屈斜路湖 #白鳥温泉 #秘湯 #無料温泉"
+            },
+            "ウトロ温泉": {
+                name: "ウトロ温泉（知床）",
+                image: "https://cdn1.genspark.ai/user-upload-image/4_generated/8a4badb7-d4e0-4f14-8ab7-9342d55f74e5",
+                description: "🌊 **世界遺産知床で流氷を眺める絶景露天風呂！**<br><br>世界遺産に登録された知床半島の玄関口、ウトロ温泉。冬季には運が良ければ露天風呂からオホーツク海に浮かぶ流氷を眺めることができる、まさに北海道ならではの絶景温泉です。源泉100%かけ流しの良質な温泉で、知床の大自然を満喫できます。<br><br>✨ **特徴**<br>• 流氷観測可能（2月〜3月）<br>• 世界遺産知床の大自然<br>• 源泉100%かけ流し<br>• オホーツク海の絶景<br><br>📍 **アクセス**: 斜里郡斜里町ウトロ<br>💰 **日帰り入浴**: 800円〜1,200円",
+                hashtags: "#ウトロ温泉 #知床 #流氷 #世界遺産 #オホーツク海"
+            },
+            "登別温泉": {
+                name: "登別温泉（登別市）",
+                image: "https://cdn1.genspark.ai/user-upload-image/4_generated/5860f1cd-26d7-495c-92b4-4b373a3e7405",
+                description: "♨️ **北海道温泉の王様！9種類の泉質を誇る名湯！**<br><br>「温泉のデパート」と呼ばれる登別温泉は、9種類もの異なる泉質を有する北海道を代表する温泉地。地獄谷から湧き出る豊富な湯量と多彩な効能で、古くから多くの人々に愛され続けています。雪化粧した温泉街の情緒も冬の魅力の一つです。<br><br>✨ **特徴**<br>• 9種類の豊富な泉質<br>• 北海道三大温泉の一つ<br>• 地獄谷の迫力ある景観<br>• 老舗温泉街の風情<br><br>📍 **アクセス**: 登別市登別温泉町<br>💰 **日帰り入浴**: 500円〜2,000円",
+                hashtags: "#登別温泉 #温泉のデパート #地獄谷 #北海道三大温泉 #名湯"
+            },
+            "定山渓温泉": {
+                name: "定山渓温泉（札幌近郊）",
+                image: "https://cdn1.genspark.ai/user-upload-image/4_generated/3947b082-5f95-4696-b173-8817e2c670fe",
+                description: "🍁 **札幌の奥座敷で雪化粧した渓谷美を堪能！**<br><br>かっぱ伝説で有名な定山渓温泉は、札幌市内から車で約1時間の好アクセス。豊平川の渓谷に広がる温泉街は、冬になると雪化粧した美しい景観を見せてくれます。「札幌の奥座敷」として親しまれ、気軽に本格的な温泉を楽しめる人気スポットです。<br><br>✨ **特徴**<br>• 札幌から1時間の好アクセス<br>• 雪化粧した渓谷美<br>• かっぱ伝説の温泉街<br>• 豊富な宿泊施設<br><br>📍 **アクセス**: 札幌市南区定山渓温泉<br>💰 **日帰り入浴**: 800円〜1,500円",
+                hashtags: "#定山渓温泉 #札幌の奥座敷 #かっぱ温泉 #渓谷美 #雪見風呂"
+            },
+            "十勝川温泉": {
+                name: "十勝川温泉（河東郡）",
+                image: "https://cdn1.genspark.ai/user-upload-image/4_generated/6694626a-715a-4e0c-8e1e-83e13d4fb981",
+                description: "💄 **世界的に珍しい植物性モール温泉で美肌効果抜群！**<br><br>太古の植物が堆積してできた泥炭層から湧き出る、世界的にも珍しい「植物性モール温泉」。琥珀色のお湯は「美人の湯」「絹の湯」として親しまれ、高い保湿効果と美肌効果で女性に大人気。十勝平野の雄大な景色も魅力の一つです。<br><br>✨ **特徴**<br>• 世界三大モール温泉の一つ<br>• 高い美肌・美容効果<br>• 琥珀色の美しいお湯<br>• 十勝平野の雄大な景観<br><br>📍 **アクセス**: 河東郡音更町十勝川温泉<br>💰 **日帰り入浴**: 800円〜1,200円",
+                hashtags: "#十勝川温泉 #モール温泉 #美人の湯 #植物性温泉 #美肌効果"
+            },
+            "洞爺湖温泉": {
+                name: "洞爺湖温泉（虻田郡）",
+                image: "https://cdn1.genspark.ai/user-upload-image/4_generated/e81b8e72-a01e-4b93-ace4-e387e0398e62",
+                description: "🌅 **カルデラ湖の絶景と温暖な気候を楽しむリゾート温泉！**<br><br>洞爺湖の美しいカルデラ湖を望む温泉リゾート地。北海道では比較的温暖な気候で、冬でも快適に過ごせるのが魅力。湖面に映る雪化粧した山々の景色は絶景そのもの。2008年洞爺湖サミットの舞台にもなった国際的な観光地です。<br><br>✨ **特徴**<br>• カルデラ湖の絶景パノラマ<br>• 比較的温暖な気候<br>• 国際的な観光リゾート<br>• 豊富な観光施設<br><br>📍 **アクセス**: 虻田郡洞爺湖町洞爺湖温泉<br>💰 **日帰り入浴**: 600円〜1,500円",
+                hashtags: "#洞爺湖温泉 #カルデラ湖 #絶景温泉 #リゾート温泉 #洞爺湖"
+            },
+            "支笏湖碧の座": {
+                name: "支笏湖 鶴雅別荘 碧の座（支笏湖）",
+                image: "https://cdn1.genspark.ai/user-upload-image/4_generated/59423468-ae40-4f31-b675-89b04820aef9",
+                description: "💎 **全室露天風呂付き！透明度抜群の支笏湖を望む至高の宿！**<br><br>支笏湖の美しい湖畔に佇む最高級温泉旅館。全25室すべてに支笏湖ビューの温泉露天風呂が備わり、まさにプライベートスパとしての極上体験が可能。透明度抜群の支笏湖と、美容液のようなとろりとした温泉で、至福のひとときを過ごせます。<br><br>✨ **特徴**<br>• 全室温泉露天風呂付き<br>• 支笏湖の絶景パノラマ<br>• 最高級のおもてなし<br>• 美人の湯として人気<br><br>📍 **アクセス**: 千歳市支笏湖温泉<br>💰 **宿泊料金**: 50,000円〜",
+                hashtags: "#支笏湖 #鶴雅別荘 #碧の座 #露天風呂付き客室 #最高級温泉"
+            },
+            "湯の川温泉啄木亭": {
+                name: "湯の川温泉 湯元 啄木亭（函館市）",
+                image: "https://cdn1.genspark.ai/user-upload-image/4_generated/5460611f-e002-43d4-a4aa-9ec98afdf00b",
+                description: "🌃 **函館の夜景を一望！空中露天風呂で極上のひととき！**<br><br>函館の奥座敷として親しまれる湯の川温泉の名門旅館。最上階の空中露天風呂からは函館の美しい夜景を一望でき、まさに絶景温泉として人気を集めています。石川啄木ゆかりの温泉地として、歴史と情緒にあふれた温泉街の雰囲気も魅力です。<br><br>✨ **特徴**<br>• 函館夜景を望む空中露天風呂<br>• 石川啄木ゆかりの温泉地<br>• 北海道三大温泉の一つ<br>• 新鮮な海の幸を堪能<br><br>📍 **アクセス**: 函館市湯川町<br>💰 **日帰り入浴**: 1,500円〜2,000円",
+                hashtags: "#湯の川温泉 #啄木亭 #函館夜景 #空中露天風呂 #石川啄木"
+            }
+        };
+
+        // 質問データ（簡略版 - 実際は50問）
+        let allQuestions = [];
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let scores = {};
+        let selectedAnswer = null;
+
+        // スコア初期化
+        function initializeScores() {
+            scores = {
+                "然別湖コタン": 0,
+                "十勝岳温泉": 0,
+                "コタンの湯": 0,
+                "ウトロ温泉": 0,
+                "登別温泉": 0,
+                "定山渓温泉": 0,
+                "十勝川温泉": 0,
+                "洞爺湖温泉": 0,
+                "支笏湖碧の座": 0,
+                "湯の川温泉啄木亭": 0
+            };
+        }
+
+        // 質問データの読み込み
+        function loadQuestions() {
+            allQuestions = [
+                {
+                    question: "あなたの年代は？",
+                    options: [
+                        { text: "10～20代", weights: { "然別湖コタン": 3, "十勝岳温泉": 2, "コタンの湯": 3, "ウトロ温泉": 2 } },
+                        { text: "30～40代", weights: { "定山渓温泉": 3, "十勝川温泉": 2, "洞爺湖温泉": 3, "支笏湖碧の座": 3 } },
+                        { text: "50代以上", weights: { "登別温泉": 3, "湯の川温泉啄木亭": 3, "洞爺湖温泉": 2, "定山渓温泉": 2 } }
+                    ]
+                },
+                {
+                    question: "一緒に旅行する人は？",
+                    options: [
+                        { text: "1人旅", weights: { "コタンの湯": 3, "十勝岳温泉": 3, "然別湖コタン": 2, "ウトロ温泉": 2 } },
+                        { text: "カップル・夫婦", weights: { "支笏湖碧の座": 3, "湯の川温泉啄木亭": 3, "洞爺湖温泉": 2, "十勝川温泉": 2 } },
+                        { text: "家族", weights: { "定山渓温泉": 3, "登別温泉": 3, "洞爺湖温泉": 2, "十勝川温泉": 2 } },
+                        { text: "友人グループ", weights: { "然別湖コタン": 3, "ウトロ温泉": 2, "登別温泉": 2, "定山渓温泉": 2 } }
+                    ]
+                },
+                {
+                    question: "どんな旅行スタイルが好み？",
+                    options: [
+                        { text: "のんびりゆったり", weights: { "支笏湖碧の座": 3, "十勝川温泉": 3, "洞爺湖温泉": 2, "湯の川温泉啄木亭": 2 } },
+                        { text: "弾丸・アクティブ", weights: { "然別湖コタン": 3, "ウトロ温泉": 3, "十勝岳温泉": 2, "コタンの湯": 2 } },
+                        { text: "秘境・隠れ家的", weights: { "コタンの湯": 3, "十勝岳温泉": 3, "然別湖コタン": 2, "ウトロ温泉": 2 } },
+                        { text: "有名観光地重視", weights: { "登別温泉": 3, "定山渓温泉": 3, "湯の川温泉啄木亭": 2, "洞爺湖温泉": 2 } }
+                    ]
+                },
+                {
+                    question: "温泉で重視するのは？",
+                    options: [
+                        { text: "泉質の良さ", weights: { "登別温泉": 3, "十勝川温泉": 3, "ウトロ温泉": 2, "湯の川温泉啄木亭": 2 } },
+                        { text: "絶景の眺望", weights: { "洞爺湖温泉": 3, "支笏湖碧の座": 3, "十勝岳温泉": 2, "ウトロ温泉": 2 } },
+                        { text: "星空観賞", weights: { "然別湖コタン": 3, "十勝岳温泉": 3, "コタンの湯": 2, "ウトロ温泉": 2 } },
+                        { text: "貸切・プライベート感", weights: { "支笏湖碧の座": 3, "コタンの湯": 3, "十勝川温泉": 2, "湯の川温泉啄木亭": 2 } }
+                    ]
+                },
+                {
+                    question: "北海道といえば何が食べたい？",
+                    options: [
+                        { text: "ラーメン", weights: { "定山渓温泉": 3, "登別温泉": 2, "湯の川温泉啄木亭": 2, "洞爺湖温泉": 2 } },
+                        { text: "海鮮・カニ", weights: { "湯の川温泉啄木亭": 3, "ウトロ温泉": 3, "登別温泉": 2, "洞爺湖温泉": 2 } },
+                        { text: "十勝牛・ジンギスカン", weights: { "十勝川温泉": 3, "十勝岳温泉": 3, "然別湖コタン": 2, "定山渓温泉": 2 } },
+                        { text: "スイーツ・乳製品", weights: { "支笏湖碧の座": 2, "洞爺湖温泉": 2, "十勝川温泉": 3, "定山渓温泉": 2 } }
+                    ]
+                },
+                {
+                    question: "SNSでよく使うのは？",
+                    options: [
+                        { text: "Instagram", weights: { "支笏湖碧の座": 3, "湯の川温泉啄木亭": 3, "洞爺湖温泉": 2, "然別湖コタン": 2 } },
+                        { text: "X（Twitter）", weights: { "然別湖コタン": 3, "コタンの湯": 2, "十勝岳温泉": 2, "ウトロ温泉": 2 } },
+                        { text: "TikTok・YouTube", weights: { "然別湖コタン": 3, "ウトロ温泉": 2, "十勝岳温泉": 2, "登別温泉": 2 } },
+                        { text: "SNSはあまり使わない", weights: { "コタンの湯": 3, "十勝岳温泉": 2, "登別温泉": 2, "定山渓温泉": 2 } }
+                    ]
+                },
+                {
+                    question: "冬の北海道で一番体験したいのは？",
+                    options: [
+                        { text: "雪見露天風呂", weights: { "十勝岳温泉": 3, "洞爺湖温泉": 3, "支笏湖碧の座": 2, "定山渓温泉": 2 } },
+                        { text: "凍った湖の上を歩く", weights: { "然別湖コタン": 3, "コタンの湯": 3, "支笏湖碧の座": 2, "ウトロ温泉": 2 } },
+                        { text: "流氷観測", weights: { "ウトロ温泉": 3, "然別湖コタン": 2, "十勝岳温泉": 2, "コタンの湯": 2 } },
+                        { text: "雪まつり・氷まつり", weights: { "定山渓温泉": 3, "登別温泉": 2, "湯の川温泉啄木亭": 2, "洞爺湖温泉": 2 } }
+                    ]
+                },
+                {
+                    question: "理想的な温泉旅行の予算（1人当たり）は？",
+                    options: [
+                        { text: "5,000円以下", weights: { "コタンの湯": 3, "然別湖コタン": 2, "十勝岳温泉": 2, "定山渓温泉": 2 } },
+                        { text: "10,000～20,000円", weights: { "登別温泉": 2, "定山渓温泉": 2, "十勝川温泉": 2, "洞爺湖温泉": 2 } },
+                        { text: "30,000～50,000円", weights: { "湯の川温泉啄木亭": 2, "ウトロ温泉": 2, "十勝川温泉": 2, "洞爺湖温泉": 2 } },
+                        { text: "50,000円以上", weights: { "支笏湖碧の座": 3, "湯の川温泉啄木亭": 2, "ウトロ温泉": 2, "十勝川温泉": 2 } }
+                    ]
+                },
+                {
+                    question: "最後に、冬の北海道温泉旅行で一番期待することは？",
+                    options: [
+                        { text: "心身のリフレッシュ", weights: { "十勝川温泉": 3, "支笏湖碧の座": 2, "洞爺湖温泉": 2, "湯の川温泉啄木亭": 2 } },
+                        { text: "非日常の体験", weights: { "然別湖コタン": 3, "コタンの湯": 2, "十勝岳温泉": 2, "ウトロ温泉": 2 } },
+                        { text: "美しい思い出作り", weights: { "支笏湖碧の座": 3, "洞爺湖温泉": 2, "湯の川温泉啄木亭": 2, "十勝岳温泉": 2 } },
+                        { text: "地元文化との触れ合い", weights: { "登別温泉": 2, "定山渓温泉": 2, "湯の川温泉啄木亭": 2, "ウトロ温泉": 2 } }
+                    ]
+                }
+            ];
+        }
+
+        function startQuiz() {
+            document.querySelector('.header').style.display = 'none';
+            document.getElementById('quizContainer').style.display = 'block';
+            
+            initializeScores();
+            loadQuestions();
+            
+            // 全質問からランダムに9問選択（実際は50問から）
+            currentQuestions = [...allQuestions].sort(() => Math.random() - 0.5).slice(0, 9);
+            currentQuestionIndex = 0;
+            
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            document.getElementById('questionText').textContent = `Q${currentQuestionIndex + 1}. ${question.question}`;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.textContent = option.text;
+                optionDiv.onclick = () => selectOption(index, optionDiv);
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // プログレスバー更新
+            const progress = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            
+            // ネクストボタンを無効化
+            document.getElementById('nextBtn').classList.remove('enabled');
+            selectedAnswer = null;
+        }
+
+        function selectOption(index, optionElement) {
+            // 既選択の解除
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            
+            // 新しい選択
+            optionElement.classList.add('selected');
+            selectedAnswer = index;
+            
+            // ネクストボタンを有効化
+            document.getElementById('nextBtn').classList.add('enabled');
+        }
+
+        function nextQuestion() {
+            if (selectedAnswer === null) return;
+            
+            // スコア加算
+            const question = currentQuestions[currentQuestionIndex];
+            const selectedOption = question.options[selectedAnswer];
+            
+            Object.keys(selectedOption.weights).forEach(destination => {
+                if (scores[destination] !== undefined) {
+                    scores[destination] += selectedOption.weights[destination];
+                }
+            });
+            
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < currentQuestions.length) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('resultContainer').style.display = 'block';
+            
+            // 最高スコアの温泉地を決定
+            let maxScore = -1;
+            let resultDestination = '';
+            
+            Object.keys(scores).forEach(destination => {
+                if (scores[destination] > maxScore) {
+                    maxScore = scores[destination];
+                    resultDestination = destination;
+                }
+            });
+            
+            const result = destinations[resultDestination];
+            
+            document.getElementById('resultTitle').textContent = `あなたにおすすめの露天風呂は...`;
+            document.getElementById('resultDescription').innerHTML = result.description;
+            document.getElementById('resultImage').src = result.image;
+            
+            // シェアボタンの設定
+            const shareText = `私にぴったりの冬の北海道露天風呂は「${result.name}」でした！ ${result.hashtags}`;
+            const appUrl = window.location.href;
+            document.getElementById('twitterShare').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(appUrl)}`;
+            document.getElementById('instagramShare').href = '#';
+        }
+
+        function restartQuiz() {
+            document.getElementById('resultContainer').style.display = 'none';
+            document.querySelector('.header').style.display = 'block';
+            currentQuestionIndex = 0;
+            selectedAnswer = null;
+            initializeScores();
+        }
+
+        // 初期化
+        window.onload = function() {
+            loadQuestions();
+        };
+    </script>
+</body>
+</html>
